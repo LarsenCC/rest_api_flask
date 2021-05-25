@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -12,7 +14,7 @@ from db import db
 app = Flask(__name__)
 
 # where the DB is... it can be postgres, sqlite, mysql...
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
 
 # turn off the Flask SQLAlchemy tracker...
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
