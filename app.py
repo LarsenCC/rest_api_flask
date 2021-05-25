@@ -20,6 +20,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "jose"
 api = Api(app)
 
+db.init_app(app)
+
 
 # only creates tables that it sees!
 @app.before_first_request
