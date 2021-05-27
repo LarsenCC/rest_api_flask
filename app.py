@@ -15,6 +15,8 @@ from db import db
 app = Flask(__name__)
 
 # where the DB is... it can be postgres, sqlite, mysql...
+
+
 uri = os.environ.get('DATABASE_URL', 'sqlite:///data.db')  # or other relevant config var
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
@@ -35,6 +37,15 @@ api = Api(app)
 
 # JWT extended!
 jwt = JWTManager(app) # not creating /auth endpoint!
+
+# everytime we create a token, add something
+@jwt.additional_claims_loader
+def add_claims_to_jwt(identity):
+    # value of user id in identity
+    print(identity)
+    if identity == 1: # instead of hardcoding, use from DB instead!
+        return {'is_admin': True}
+    return {'is_admin': False}
 
 
 # we dont have to make the decorator ourselves
