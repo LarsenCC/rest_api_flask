@@ -5,6 +5,7 @@ from models.user import UserModel
 # id_mapping = {user.id: user for user in users}
 
 
+# check if username and password match
 def authenticate(username, password):
     user = UserModel.find_by_username(username)
     if user and user.password == password:
