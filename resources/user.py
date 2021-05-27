@@ -1,6 +1,13 @@
 from flask_restful import Resource, reqparse
 from models.user import UserModel
-from flask_jwt_extended import create_refresh_token, create_access_token
+from flask_jwt_extended import (
+    create_refresh_token, 
+    create_access_token, 
+    get_jwt_identity,
+    jwt_required,
+    get_jwt
+)
+from blacklist import BLACKLIST
 
 
 # _varname is a sign that this is a private variable
@@ -74,7 +81,7 @@ class UserLogin(Resource):
         if user and user.password == data['password']:
             # create access token
             # identity= is what the 'identity()' function used to do
-            access_token = create_access_token(identity=user.id, fresh=True)
+            access_token = create_access_token(identity=user.id, fresh=True) # NOT fresh
              # create a refresh token!
             refresh_token = create_refresh_token(user.id)
             return {
@@ -83,5 +90,20 @@ class UserLogin(Resource):
             }, 200
 
         return {'message': 'Invalid credentials.'}, 401
-        
 
+
+class UserLogout(Resource):
+    @jwt_required()
+    def post(self):
+        # jwt id...
+        jti = get_jwt()["jti"]
+        BLACKLIST.add(jti)
+        return {'message': 'Successfully logged out.'}
+
+
+class TokenRefresh(Resource):
+    @jwt_required(refresh=True)
+    def post(self):
+        current_user = get_jwt_identity()
+        new_token = create_access_token(identity=current_user, fresh=False) # NOT fresh
+        return {'access_token': new_token}, 200

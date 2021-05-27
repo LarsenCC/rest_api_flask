@@ -44,7 +44,7 @@ class Item(Resource):
 
         return item.json(), 201
 
-    @jwt_required()
+    @jwt_required(fresh=True) # needs a fresh token!
     def delete(self, name):
         """connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
