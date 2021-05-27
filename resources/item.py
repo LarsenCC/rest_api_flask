@@ -34,7 +34,7 @@ class Item(Resource):
 
         data = Item.parser.parse_args()
 
-        item = ItemModel(name, data['price'], data['store_id'])
+        item = ItemModel(name, **data)
 
         try:
             item.save_to_db()
@@ -79,8 +79,8 @@ class Item(Resource):
 class ItemList(Resource):
     @jwt_required()
     def get(self):
-        # return ItemList.get_all_items()
-        return {'item': [item.json() for item in ItemModel.query.all()]}
+        # make queries only from the Model, not from Resource, makes it too heavy!
+        return {'item': [item.json() for item in ItemModel.find_all()]}
         # return {'item': list(map(lambda x: x.json(), ItemModel.query.all()))}
 
     """@classmethod
