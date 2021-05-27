@@ -80,7 +80,6 @@ def expired_token_callback(header, payload):
 # when a valid and non-fresh token is used on an endpoint that is marked as fresh=True.
 @jwt.needs_fresh_token_loader
 def needs_fresh_token_callback(header, payload):
-    print(args)
     return jsonify({
         'description': 'This token is not fresh. Log in again to gain fresh token.',
         'error': 'needs_fresh_token'
