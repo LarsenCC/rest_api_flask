@@ -25,6 +25,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = uri
 # turn off the Flask SQLAlchemy tracker...
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+# Get the actuall error messages from the API, not server 500...
+app.config['PROPAGATE_EXCEPTIONS'] = True
+
 app.secret_key = "jose"
 api = Api(app)
 
