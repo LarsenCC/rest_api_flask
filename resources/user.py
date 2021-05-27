@@ -71,7 +71,7 @@ class UserLogin(Resource):
 
         # check password
         # this is what the 'authenticate()' function used to do
-        if user and user.password == password:
+        if user and user.password == data['password']:
             # create access token
             # identity= is what the 'identity()' function used to do
             access_token = create_access_token(identity=user.id, fresh=True)

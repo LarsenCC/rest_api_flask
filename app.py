@@ -29,7 +29,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # Get the actuall error messages from the API, not server 500...
 app.config['PROPAGATE_EXCEPTIONS'] = True
 
-app.secret_key = "larsen" # app.config['JWT_SECRET_KEY']
+app.secret_key = "jose" # app.config['JWT_SECRET_KEY']
 api = Api(app)
 
 # new endpoint /auth, we send it a username and a password
