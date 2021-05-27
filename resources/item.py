@@ -55,7 +55,7 @@ class Item(Resource):
         connection.commit()
         connection.close()"""
         claims = get_jwt()
-        print(claims)
+        # print(claims)
         if not claims['is_admin']:
             return {'message': 'Admin privilege required!'}
             
@@ -87,7 +87,7 @@ class ItemList(Resource):
     def get(self):
         user_id = get_jwt_identity()
         items = [item.json() for item in ItemModel.find_all()]
-        print(user_id)
+        # print(user_id)
         if user_id:
             return {'items': items}, 200
         # make queries only from the Model, not from Resource, makes it too heavy!

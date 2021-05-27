@@ -53,7 +53,7 @@ jwt = JWTManager(app) # not creating /auth endpoint!
 @jwt.additional_claims_loader
 def add_claims_to_jwt(identity):
     # value of user id in identity
-    print(identity)
+    # print(identity)
     if identity == 1: # instead of hardcoding, use from DB instead!
         return {'is_admin': True}
     return {'is_admin': False}
@@ -61,7 +61,7 @@ def add_claims_to_jwt(identity):
 
 @jwt.token_in_blocklist_loader
 def check_if_token_in_blacklist(header, payload):
-    print(header, payload)
+    # print(header, payload)
     # check if user is on blacklist/logged out
     return payload['jti'] in BLACKLIST
 
